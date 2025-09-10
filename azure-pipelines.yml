@@ -2,7 +2,7 @@ trigger:
 - main   # Runs pipeline when code is pushed to master branch
 
 pool:
-  name: 'Hosted Agent'
+  name: 'mvcwithcicd'
 
 variables:
   buildConfiguration: 'Release'   # Build configuration (Release/Debug)
