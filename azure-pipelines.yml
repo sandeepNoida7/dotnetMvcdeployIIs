@@ -2,7 +2,7 @@ trigger:
 - main   # Runs pipeline when code is pushed to master branch
 
 pool:
-  name: 'sandeepkaran'
+  name: 'Hosted Agent'
 
 variables:
   buildConfiguration: 'Release'   # Build configuration (Release/Debug)
