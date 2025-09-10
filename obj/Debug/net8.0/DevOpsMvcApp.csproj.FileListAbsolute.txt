@@ -31,3 +31,4 @@ C:\DevOpsMvcApp\obj\Debug\net8.0\refint\DevOpsMvcApp.dll
 C:\DevOpsMvcApp\obj\Debug\net8.0\DevOpsMvcApp.pdb
 C:\DevOpsMvcApp\obj\Debug\net8.0\DevOpsMvcApp.genruntimeconfig.cache
 C:\DevOpsMvcApp\obj\Debug\net8.0\ref\DevOpsMvcApp.dll
+C:\DevOpsMvcApp\obj\Debug\net8.0\DevOpsMvcApp.sourcelink.json
