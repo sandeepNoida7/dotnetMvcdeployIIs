@@ -1,34 +1,21 @@
-# ASP.NET
-# Build and test ASP.NET projects.
-# Add steps that publish symbols, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
-
 trigger:
-- main
+- main   # Runs pipeline when code is pushed to master branch
 
 pool:
-  name: 'sandeep'
+  name: 'sandeep'   # Pipeline agent OS
 
 variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
+  buildConfiguration: 'Release'   # Build configuration (Release/Debug)
 
 steps:
-- task: NuGetToolInstaller@1
-
-- task: NuGetCommand@2
+- task: DotNetCoreCLI@2   # Task for .NET Core CLI
   inputs:
-    restoreSolution: '$(solution)'
+    command: publish   # Runs dotnet publish
+    publishWebProjects: True   # Publishes all web projects
+    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)' 
+    zipAfterPublish: True   # Zips the publish output
 
-- task: VSBuild@1
+- task: PublishBuildArtifacts@1   # Publishes artifacts
   inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
-
-- task: VSTest@2
-  inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    pathToPublish: '$(Build.ArtifactStagingDirectory)'   # Directory to publish
+    artifactName: 'myWebsiteName'   # Artifact name in DevOps
