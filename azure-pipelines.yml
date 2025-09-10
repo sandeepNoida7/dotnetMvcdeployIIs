@@ -1,0 +1,21 @@
+trigger:
+- main   # Runs pipeline when code is pushed to master branch
+
+pool:
+  name: 'sandeepkaran'
+
+variables:
+  buildConfiguration: 'Release'   # Build configuration (Release/Debug)
+
+steps:
+- task: DotNetCoreCLI@2   # Task for .NET Core CLI
+  inputs:
+    command: publish   # Runs dotnet publish
+    publishWebProjects: True   # Publishes all web projects
+    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)' 
+    zipAfterPublish: True   # Zips the publish output
+
+- task: PublishBuildArtifacts@1   # Publishes artifacts
+  inputs:
+    pathToPublish: '$(Build.ArtifactStagingDirectory)'   # Directory to publish
+    artifactName: 'myWebsiteName'   # Artifact name in DevOps
