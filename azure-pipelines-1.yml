@@ -1,21 +1,23 @@
 trigger:
-- main   # Runs pipeline when code is pushed to master branch
+- main  # ✅ This triggers the build when you push to 'main' branch
 
 pool:
-  name: 'sandeep'   # Pipeline agent OS
+  name: 'sandeep'  # ✅ Your self-hosted agent pool name — make sure 'sandeep' is correct
 
 variables:
-  buildConfiguration: 'Release'   # Build configuration (Release/Debug)
+  buildConfiguration: 'Release'  # ✅ Standard build config for .NET
 
 steps:
-- task: DotNetCoreCLI@2   # Task for .NET Core CLI
+- task: DotNetCoreCLI@2
+  displayName: 'Publish .NET Web Project'
   inputs:
-    command: publish   # Runs dotnet publish
-    publishWebProjects: True   # Publishes all web projects
-    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)' 
-    zipAfterPublish: True   # Zips the publish output
+    command: 'publish'
+    publishWebProjects: true
+    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: true
 
-- task: PublishBuildArtifacts@1   # Publishes artifacts
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifacts to DevOps'
   inputs:
-    pathToPublish: '$(Build.ArtifactStagingDirectory)'   # Directory to publish
-    artifactName: 'myWebsiteName'   # Artifact name in DevOps
+    pathToPublish: '$(Build.ArtifactStagingDirectory)'  # ✅ Output path from dotnet publish
+    artifactName: 'myWebsiteName'                        # ✅ This is what will show in release pipeline
